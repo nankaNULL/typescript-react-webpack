@@ -7,7 +7,9 @@
     "stage-0"
   ],
   "plugins": [
-    "import",
+    ["import",
+      { "libraryName": "antd", "style": true }
+    ],
     "transform-runtime",
     "transform-decorators-legacy"
   ]
