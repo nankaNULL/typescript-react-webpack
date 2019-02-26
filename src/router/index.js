@@ -17,15 +17,3 @@ export const Routers = class extends React.Component {
     );
   }
 }
-// export const Routers = class extends React.Component{
-//   render(){
-//     return (
-//       <Router>
-//         <div>
-//           <Route exact path="/" component={Home}></Route>
-//           <Route path="/list" component={List}></Route>
-//         </div>
-//       </Router>
-//     )
-//   }
-// }
