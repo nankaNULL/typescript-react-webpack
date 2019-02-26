@@ -1,26 +1,26 @@
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+// const CopyWebpackPlugin = require('copy-webpack-plugin');
 const path = require('path');
 const buildPath = path.resolve(__dirname, '../dist');
 // const  theme = require('../antd-theme.js');
 module.exports = {
   mode:'development',
   devtool: 'cheap-module-eval-source-map',
-  context:path.resolve(__dirname, '../src'),
+  context:path.resolve(__dirname, '../src'), // 解析起点
   entry:{
     vendor: ['react'],
     app: ['./main.js']
   },
   output: {
-    path: buildPath,
-    publicPath: '/',
-    chunkFilename: 'js/[name].[hash].js',
+    path: buildPath, // 输出文件存放在本地的目录
+    publicPath: '/', // 配置发布到线上资源的 URL 前缀
+    chunkFilename: 'js/[name].[hash].js', // 无入口的chunk在输出时的文件名称
     filename: 'js/[name].[hash].js'
   },
-  resolve: {
-    extensions: ['.js', '.jsx', '.scss', '.css', '.json'], 
-    alias: { 
+  resolve: { // 配置 Webpack 如何寻找模块所对应的文件
+    extensions: ['.js', '.jsx', '.scss', '.css', '.json'], // 用于配置在尝试过程中用到的后缀列表
+    alias: { // 别名
       '@':path.resolve(__dirname,'../src'),
       'public': path.resolve(__dirname, '../public'),
       'components': path.resolve(__dirname, '../src/components/'),
@@ -31,21 +31,25 @@ module.exports = {
   externals :{
     'FRONT_CONF': 'FRONT_CONF'
   },
-  module: {
-    rules: [{
+  module: { 
+    rules: [{ // 配置模块的读取和解析规则，通常用来配置 Loader
         test: /\.js|jsx$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader?cacheDirectory',
-          options: {}
-        }
+        exclude: /node_modules/, // exclude不包括，include只命中
+        use:['babel-loader?cacheDirectory'],
+        // use: { // 这算是第二种写法，和上面的意义是一样的
+        //   loader: 'babel-loader',
+        //   options: {
+        //     cacheDirectory:true
+        //   }
+        // }
       },
       {
         test: /\.(less|css)$/,
         use: [
           'style-loader',
           'css-loader',
-          'less-loader?{modifyVars:'+JSON.stringify(theme)+'}'
+          'less-loader'
+          // 'less-loader?{modifyVars:'+JSON.stringify(theme)+'}'
         ],
       },
       {
@@ -66,35 +70,27 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'index.html',
-      hash: false,
-      chunksSortMode:'none',
-      // title:'中金易云-门店端',
-      // assets: {
-      //   favicon: '/imgs/favicon.ico',
-      //   config_js: '/config/conf.dev.js'
-      // }
     }),
-    new webpack.DefinePlugin({__PRODUCTION: JSON.stringify(false)}),
     new webpack.NamedModulesPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-    new CopyWebpackPlugin([ 
+    // new webpack.HotModuleReplacementPlugin(),
+    // new CopyWebpackPlugin([ 
       // {from: path.resolve(__dirname,'../public/config'),to:'config'},
       // {from: path.resolve(__dirname,'../public/mock'),to:'mock'},
       // {from: path.resolve(__dirname,'../public/images'),to:'images'},
       // {from: path.resolve(__dirname,'../public/fonts'),to:'fonts'},
       // {from: path.resolve(__dirname,'../public/pages'),to:'pages'}
-    ])
+    // ])
   ],
   devServer: {
     host: '0.0.0.0',
-    port: '8080',
+    port: '8181',
     contentBase: buildPath,
     publicPath: '/',
     historyApiFallback: true,
     // disableHostCheck: true,
     // compress: true,
-    hot: true,
-    inline:true,
+    // hot: true, // 开启模块热替换功能
+    // inline:true, // 自动刷新网页实现实时预览
     // proxy: [{
     //   path: '/api',
     //   // target: 'http://172.16.0.98:8788',//本地
@@ -103,3 +99,4 @@ module.exports = {
     // }]
   }
 };
+
