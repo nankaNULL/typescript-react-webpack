@@ -18,6 +18,14 @@ function getRouterConf ( routerConf ) {
       let newPath = fPath === '/' ? path : fPath + path;
       if ( redirect ) {
         myRoutes.push(<Redirect exact key={redirect} from={path} to={redirect}></Redirect>)
+      } else if ( layout ) {
+        myRoutes.push(<Route exact key={newPath} path={newPath} render={(props) => {
+          return React.createElement(
+            layout,
+            props,
+            React.createElement(component, props)
+          )
+        }}></Route>)
       } else {
         myRoutes.push(<Route exact key={newPath} path={newPath} component={component}></Route>)
       }
