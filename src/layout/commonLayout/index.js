@@ -20,11 +20,10 @@ export default class CommonLayout extends React.PureComponent{
   };
 
   render () {
-    console.log(this.props)
     const { siderBarData } = this.state;
     const { location: { pathname } } = this.props;
     return (
-      <MainLayout className="layout-common">
+      <MainLayout className="layout-common" {...this.props}>
         <Sider className="sider">
           <Menu
             theme="dark" 

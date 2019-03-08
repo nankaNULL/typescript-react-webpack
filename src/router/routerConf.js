@@ -14,7 +14,7 @@ export const routerConf = [
   },
   {
     path: '/common',
-    redirect: '/common/bookRank',
+    redirect: '/common/bookRank1',
     children: [{
       path: '/bookRank1',
       component: BookRank1,
