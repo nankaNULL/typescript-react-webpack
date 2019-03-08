@@ -27,7 +27,7 @@ export default class MainLayout extends React.PureComponent{
           <div className="header-logo">LOGO</div>
           <Menu 
             mode="horizontal" 
-            // selectedKeys={topNavData.filter((topNav) => pathname.indexOf(topNav.url)>-1).map((topNav) => topNav.url)}
+            defaultSelectedKeys={['1']} 
             >
             {topNavData.map((item) => (
               <Menu.Item className="top-nav-item" key={item.url}><Link to={item.url}>{item.title}</Link></Menu.Item>
