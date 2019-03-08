@@ -1,0 +1,31 @@
+body{
+  position: relative;
+  .layout-main{
+    height:100%;
+    box-sizing: border-box;
+    .header{
+      display:flex;
+      background: #fff;
+      .header-logo{
+        width: 200px
+      }
+      .top-nav-item{
+        height:64px;
+        line-height: 64px;
+      }
+    }
+    .content{
+      min-height: 500px;
+      overflow: auto;
+    }
+    // .content .ant-layout .ant-layout-has-sider{
+    //   flex: 1;
+    // }
+    .footer{
+      position: absolute;
+      text-align: center;
+      bottom:0;
+      width:100%;
+    }
+  }
+}
