@@ -5,6 +5,9 @@ import './style.scss';
 const { Header, Content, Footer } = Layout;
 
 export default class MainLayout extends React.PureComponent{
+  static defaultProps = {
+    className:''
+  }
   state = {
     topNavData: [{
       title: '首页',
@@ -19,10 +22,10 @@ export default class MainLayout extends React.PureComponent{
   };
   render () {
     const { topNavData } = this.state;
-    const { location: { pathname } } = this.props;
-    console.log(pathname);
+    const { location: { pathname }, className } = this.props;
+    console.log(className);
     return (
-      <Layout className="layout-main">
+      <Layout className={`${className} layout-main`}>
         <Header className="header">
           <div className="header-logo">LOGO</div>
           <Menu 
