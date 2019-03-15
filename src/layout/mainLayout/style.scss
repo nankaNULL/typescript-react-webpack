@@ -15,12 +15,11 @@ body{
       }
     }
     .content{
-      min-height: 500px;
-      overflow: auto;
+      position: absolute;
+      width:100%;
+      bottom: 69px;
+      top: 64px;
     }
-    // .content .ant-layout .ant-layout-has-sider{
-    //   flex: 1;
-    // }
     .footer{
       position: absolute;
       text-align: center;
