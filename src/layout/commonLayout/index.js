@@ -34,7 +34,7 @@ export default class CommonLayout extends React.PureComponent{
       url: '/common/bookRank3',
       icon: 'file'
     }]
-    getBookMenuList({ menuList });
+    getBookMenuList(menuList);
   }
 
   toggleCollapsed = () => {
