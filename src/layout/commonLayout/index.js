@@ -1,4 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import * as action from "@/store/action";
+import { withRouter } from 'react-router';
+import { bindActionCreators } from "redux";
 import { Layout, Menu, Icon, Button } from 'antd';
 import { Link } from 'react-router-dom';
 import MainLayout from '../mainLayout';
@@ -6,6 +10,10 @@ import './style.scss';
 const { Header, Sider, Content, Footer } = Layout;
 const SubMenu = Menu.SubMenu;
 
+@connect(
+  (state) => state.global,
+  (dispatch) => bindActionCreators({ ...action }, dispatch)
+)
 export default class CommonLayout extends React.PureComponent{
   state = {
     siderBarData: [{
@@ -23,6 +31,12 @@ export default class CommonLayout extends React.PureComponent{
     }],
     collapsed: false
   };
+
+  componentDidMount() { 
+    console.log(this.props);
+    
+  }
+
   toggleCollapsed = () => {
     this.setState({collapsed: !this.state.collapsed})
   }
