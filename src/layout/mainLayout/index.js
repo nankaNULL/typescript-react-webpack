@@ -23,7 +23,6 @@ export default class MainLayout extends React.PureComponent{
   render () {
     const { topNavData } = this.state;
     const { location: { pathname }, className } = this.props;
-    console.log(className);
     return (
       <Layout className={`${className} layout-main`}>
         <Header className="header">
