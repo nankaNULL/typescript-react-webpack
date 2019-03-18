@@ -9,7 +9,7 @@ const globalReducer = ( state = initialState, action ) => {
   const { type, payload } = action;
   switch ( type ) {
     case bookAction.BOOK_MENU_LIST: 
-      return Object.assign({}, state, {menuList: payload});
+      return payload;
     default: return state;
   }
 }

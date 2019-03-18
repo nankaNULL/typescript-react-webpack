@@ -11,12 +11,17 @@ const { Header, Sider, Content, Footer } = Layout;
 const SubMenu = Menu.SubMenu;
 
 @connect(
-  (state) => state.global,
+  (state) => state.globalReducer,
   (dispatch) => bindActionCreators({ ...action }, dispatch)
 )
 export default class CommonLayout extends React.PureComponent{
   state = {
-    siderBarData: [{
+    collapsed: false
+  };
+
+  componentDidMount() {
+    const { getBookMenuList } = this.props;
+    const menuList = [{
       title: '图书排行1',
       url: '/common/bookRank1',
       icon: 'pie-chart'
@@ -28,13 +33,8 @@ export default class CommonLayout extends React.PureComponent{
       title: '图书排行3',
       url: '/common/bookRank3',
       icon: 'file'
-    }],
-    collapsed: false
-  };
-
-  componentDidMount() { 
-    console.log(this.props);
-    
+    }]
+    getBookMenuList({ menuList });
   }
 
   toggleCollapsed = () => {
@@ -42,8 +42,7 @@ export default class CommonLayout extends React.PureComponent{
   }
 
   render () {
-    const { siderBarData } = this.state;
-    const { location: { pathname } } = this.props;
+    const { location: { pathname }, menuList } = this.props;
     return (
       <MainLayout className="layout-common" {...this.props}>
         <Sider 
@@ -57,13 +56,13 @@ export default class CommonLayout extends React.PureComponent{
           </Button>
           <Menu
             theme="dark" 
-            selectedKeys={siderBarData.filter((siderBar) => pathname.indexOf(siderBar.url)>-1).map((siderBar) => siderBar.url)}>
-            {siderBarData.map((item) => (
+            selectedKeys={ menuList.filter((siderBar) => pathname.indexOf(siderBar.url)>-1).map((siderBar) => siderBar.url)}>
+            {menuList.map((item) => (
               <Menu.Item key={item.url}>
                 <Icon type={item.icon} />
                 <span><Link to={item.url} style={{color: '#fff'}}>{item.title}</Link></span>
-              </Menu.Item>
-            ))}
+              </Menu.Item>)
+            )}
           </Menu>
         </Sider>
         <Content>
