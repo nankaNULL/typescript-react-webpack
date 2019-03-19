@@ -1,10 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as action from "@/store/action";
-import { withRouter } from 'react-router';
 import { bindActionCreators } from "redux";
 import { Layout, Menu, Icon, Button } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import MainLayout from '../mainLayout';
 import './style.scss';
 const { Header, Sider, Content, Footer } = Layout;
