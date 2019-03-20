@@ -1,4 +1,5 @@
 import 'whatwg-fetch';
+import { getResponse } from './interceptor'
 
 class Http{
   get(url, params) {
@@ -16,19 +17,10 @@ class Http{
 
   request(url, options) {
     return fetch(url, options)
-    .then(res => {
-      if(res.ok){
-        return res;
-      } else {
-        throw res.status;
-        // return Promise.reject('something went wrong!')
-      }
-    })
+    .then(getResponse) // 我这里把他单独拿出去了
     .then(response => {
       // 他这里没有直接在上面返回response.json()是因为还想做一个loading false的操作
       // 我这里没做，其实放上面，可能，也不是不可以啊
-      // https://www.cnblogs.com/libin-1/p/6853677.html
-      // 转为json格式才能拿到数据
       return response.json()
     })
     .then(data => {
@@ -66,7 +58,7 @@ class Http{
   defaultHeader() {
     return {
       'Accept': '*/*',
-      mode: 'cors',
+      // mode: 'cors',
       'Content-Type': 'application/json;charset=UTF-8',
     }
   }
