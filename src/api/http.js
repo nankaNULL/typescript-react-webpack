@@ -1,4 +1,5 @@
 import 'whatwg-fetch';
+
 class Http{
   get(url, params) {
     const options = { method:'GET'};
@@ -20,6 +21,7 @@ class Http{
         return res;
       } else {
         throw res.status;
+        // return Promise.reject('something went wrong!')
       }
     })
     .then(response => {
@@ -30,10 +32,24 @@ class Http{
       return response.json()
     })
     .then(data => {
+      // 这里才算真的把data值返回了回去
       return data;
     })
     .catch(err => {
-      console.log('error is',err)
+      // 异常处理
+      if (err === 401) {
+        message.warn('您还没有登录或登录已过期，请登录!');
+        setTimeout(() => {
+            const url = `${LOGAPICONF.LOGINURL}`;
+            this.redirectWay(url)
+        }, 1000);
+      } else if (err=== 403 || err === 402) {
+        window.location.href = '/home'; 
+      } else if (err === 404) {
+        window.location.href = '/list';
+      } else {
+        message.error(`请求错误`);
+      }
     })
   }
   
@@ -49,12 +65,9 @@ class Http{
 
   defaultHeader() {
     return {
-      // 'Accept': '*/*',
-      // 'Content-Type': 'application/json;charset=UTF-8',
       'Accept': '*/*',
       mode: 'cors',
-      'Content-Type': 'application/json',
-      // 'Access-Control-Allow-Origin':'*'
+      'Content-Type': 'application/json;charset=UTF-8',
     }
   }
 }

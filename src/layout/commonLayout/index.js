@@ -5,7 +5,7 @@ import { bindActionCreators } from "redux";
 import { Layout, Menu, Icon, Button } from 'antd';
 import { Link, withRouter } from 'react-router-dom';
 import MainLayout from '../mainLayout';
-import API from '@/api';
+import { API } from '@/api';
 import './style.scss';
 const { Header, Sider, Content, Footer } = Layout;
 const SubMenu = Menu.SubMenu;
@@ -20,13 +20,15 @@ export default class CommonLayout extends React.PureComponent{
   };
 
   componentDidMount() {
-    this.getBookMenuList()
+    this.getBookMenuList();
+    // console.log(API);
+    // API.getTheData();
     API.getTheData({}).then(res => {
       console.log(res);
     });
-    API.getErrData({}).then(res => {
-      console.log(res)
-    })
+    // API.getErrData({}).then(res => {
+    //   console.log(res)
+    // })
   }
 
   getBookMenuList() {
