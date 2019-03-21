@@ -10,20 +10,32 @@ import './style.scss';
 const { Header, Sider, Content, Footer } = Layout;
 const SubMenu = Menu.SubMenu;
 
+// interface CommonLayoutProps{
+//   location: any;
+//   menuList: any;
+//   getBookMenuList: any;
+// }
+interface CommonLayoutState{
+  collapsed: boolean;
+}
+
 @connect(
-  (state) => state.globalReducer,
-  (dispatch) => bindActionCreators({ ...action }, dispatch)
+  (state: any) => state.globalReducer,
+  (dispatch: any) => bindActionCreators({ ...action }, dispatch)
 )
-export default class CommonLayout extends React.PureComponent{
-  state = {
-    collapsed: false
-  };
+export default class CommonLayout extends React.PureComponent<any, CommonLayoutState>{
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      collapsed: false
+    };
+  }
 
   componentDidMount() {
     this.getBookMenuList();
     // console.log(API);
     // API.getTheData();
-    API.getTheData({}).then(res => {
+    API.getTheData({}).then((res: any) => {
       console.log(res);
     });
     // API.getErrData({}).then(res => {
@@ -68,8 +80,8 @@ export default class CommonLayout extends React.PureComponent{
           </Button>
           <Menu
             theme="dark" 
-            selectedKeys={ menuList.filter((siderBar) => pathname.indexOf(siderBar.url)>-1).map((siderBar) => siderBar.url)}>
-            {menuList.map((item) => (
+            selectedKeys={ menuList.filter((siderBar: any) => pathname.indexOf(siderBar.url)>-1).map((siderBar: any) => siderBar.url)}>
+            {menuList.map((item: any) => (
               <Menu.Item key={item.url}>
                 <Icon type={item.icon} />
                 <span><Link to={item.url} style={{color: '#fff'}}>{item.title}</Link></span>

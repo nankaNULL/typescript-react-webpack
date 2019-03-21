@@ -30,14 +30,6 @@ export default class MainLayout extends React.PureComponent<any, MainLayoutState
     const { location: { pathname }, className } = this.props;
     return (
       <div>
-        <Button type="primary">emm</Button>
-        <Menu 
-          mode="horizontal" 
-          selectedKeys={topNavData.filter((topNav: any) => pathname.indexOf(topNav.url)>-1).map((topNav: any) => topNav.url)}>
-          {topNavData.map((item: any) => (
-            <Menu.Item className="top-nav-item" key={item.url}><Link to={item.url}>{item.title}</Link></Menu.Item>
-          ))}
-        </Menu>
         <Layout className={`${className} layout-main`}>
           <Header className="header">
             <div className="header-logo">LOGO</div>

@@ -5,7 +5,7 @@ import { bookAction } from './actionType';
 const initialState = {
   menuList: []
 };
-const globalReducer = ( state = initialState, action ) => {
+const globalReducer = ( state: any = initialState, action: any ) => {
   const { type, payload } = action;
   switch ( type ) {
     case bookAction.BOOK_MENU_LIST: 
