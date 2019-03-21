@@ -10,7 +10,7 @@
     "preview": "pushstate-server ./dist 1234"
   },
   "dependencies": {
-    "antd": "^3.14.1",
+    "antd": "^3.15.1",
     "lodash": "^4.17.11",
     "mirror-creator": "^1.1.0",
     "react": "^16.4.2",
