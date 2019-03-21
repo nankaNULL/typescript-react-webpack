@@ -23,9 +23,11 @@
   },
   "devDependencies": {
     "@types/classnames": "^2.2.7",
+    "@types/lodash": "^4.14.123",
     "@types/react-dom": "^16.8.3",
     "@types/react-redux": "^7.0.5",
     "@types/react-router-dom": "^4.3.1",
+    "@types/react-router-redux": "^5.0.18",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-plugin-import": "^1.6.2",
