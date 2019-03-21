@@ -19,7 +19,7 @@ module.exports = {
     filename: 'js/[name].[hash].js'
   },
   resolve: { // 配置 Webpack 如何寻找模块所对应的文件
-    extensions: ['.js', '.jsx', '.scss', '.css', '.json'], // 用于配置在尝试过程中用到的后缀列表
+    extensions: ['.js', '.jsx', '.ts', '.tsx', '.scss', '.css', '.json'], // 用于配置在尝试过程中用到的后缀列表
     alias: { // 别名
       '@':path.resolve(__dirname,'../src'),
       'public': path.resolve(__dirname, '../public'),
@@ -36,12 +36,11 @@ module.exports = {
         test: /\.js|jsx$/,
         exclude: /node_modules/, // exclude不包括，include只命中
         use:['babel-loader?cacheDirectory'],
-        // use: { // 这算是第二种写法，和上面的意义是一样的
-        //   loader: 'babel-loader',
-        //   options: {
-        //     cacheDirectory:true
-        //   }
-        // }
+      },
+      {
+        test: /\.ts|tsx?$/,
+        use: ['babel-loader', 'ts-loader'],
+        exclude: /node_modules/,
       },
       {
         test: /\.(less|css)$/,

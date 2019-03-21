@@ -48,6 +48,8 @@
     "scss-loader": "^0.0.1",
     "strip-loader": "^0.1.2",
     "style-loader": "^0.19.0",
+    "ts-loader": "^5.3.3",
+    "typescript": "^3.3.4000",
     "uglify-js": "^3.1.0",
     "uglifyjs-webpack-plugin": "^1.2.7",
     "webpack": "^4.17.0",
