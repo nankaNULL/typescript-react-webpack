@@ -1,4 +1,4 @@
-export function getResponse(response) {
+export function getResponse(response: any) {
   if(response.ok){
     return response;
   } else {

@@ -1,21 +1,22 @@
 import 'whatwg-fetch';
+import { message } from 'antd';
 import { getResponse } from './interceptor'
 
 class Http{
-  get(url, params) {
+  get(url: string, params: any) {
     const options = { method:'GET'};
     const newUrl = params ? this.buildPath(url, params) : url;
     return this.request(newUrl, options)
   }
 
-  post(url, body) {
-    let options = { method:'POST'};
+  post(url: string, body: any) {
+    let options:any = { method:'POST'};
     if (body) options.body = JSON.stringify(body);
     options.headers = this.defaultHeader()
     return this.request(url, options)
   }
 
-  request(url, options) {
+  request(url: string, options: any) {
     return fetch(url, options)
     .then(getResponse) // 我这里把他单独拿出去了
     .then(response => {
@@ -31,10 +32,10 @@ class Http{
       // 异常处理
       if (err === 401) {
         message.warn('您还没有登录或登录已过期，请登录!');
-        setTimeout(() => {
-            const url = `${LOGAPICONF.LOGINURL}`;
-            this.redirectWay(url)
-        }, 1000);
+        // setTimeout(() => {
+        //     const url = `${LOGAPICONF.LOGINURL}`;
+        //     this.redirectWay(url)
+        // }, 1000);
       } else if (err=== 403 || err === 402) {
         window.location.href = '/home'; 
       } else if (err === 404) {
@@ -45,7 +46,7 @@ class Http{
     })
   }
   
-  buildPath(url, params){
+  buildPath(url: string, params: any){
     const ps = [];
     if (params) {
       for(let p in params) {
