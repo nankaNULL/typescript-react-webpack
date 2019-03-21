@@ -10,7 +10,7 @@ module.exports = {
   context:path.resolve(__dirname, '../src'), // 解析起点
   entry:{
     vendor: ['react'],
-    app: ['./main.js']
+    app: ['./main']
   },
   output: {
     path: buildPath, // 输出文件存放在本地的目录

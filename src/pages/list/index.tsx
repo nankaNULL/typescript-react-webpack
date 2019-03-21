@@ -1,5 +1,5 @@
 import React from 'react';
-import {ListProps, ListState} from './interfaces';
+import {ListProps, ListState} from '../../constants/interfaces';
 
 function getExclamationMarks(numChars: number) {
   return Array(numChars + 1).join('|');

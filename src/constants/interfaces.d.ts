@@ -9,3 +9,6 @@ export interface ListState {
   currentEnthusiasm: number;
   visible: boolean;
 }
+export interface MainLayoutState {
+  topNavData: any;
+}
