@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    "module": "ESNext",
+    "target": "es6",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    //允许从没有设置默认导出的模块中默认导入。这并不影响代码的输出，仅为了类型检查。
+    
+    //我感觉baseUrl和paths都不用，因为有webpack啊
+    "baseUrl": ".",// import的相对起始路径 // 解析非相对模块名的基准目录
+    // `vs code`所需要的，在开发时找到对应的路径，真实的引用是在`webpack`中配置的`alias`
+    // 所以这个配置没有鬼用啊
+    "paths": {
+      "@Common": [
+        "../src/common"
+      ],
+      "@Common/*": [
+        "../src/common/*"
+      ]
+    },
+    // 开启装饰器的使用
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    // 开启`JSX`模式, 
+    // `preserve`的配置让`tsc`不会去处理它，而是使用后续的`babel-loader`进行处理
+    "jsx": "preserve", // 但他默认就是preserve，所以其实可以删了
+    
+    "sourceMap": true, 
+    
+    "strict": true, // 启用严格模式
+    "noImplicitAny": true,
+    
+    
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}
