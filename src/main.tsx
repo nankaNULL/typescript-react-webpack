@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-// import { Routers } from './router';
+import { Routers } from './router';
 // import store from './store'
 import List from '@/pages/home';
 
@@ -13,4 +13,4 @@ const render = (Component: any) =>
     // </Provider>,
     document.getElementById('root')
   )
-render(List)
+render(Routers)

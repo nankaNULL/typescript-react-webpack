@@ -5,10 +5,10 @@ export const history = createHistory();
 // import routerConf from './routerConf.js'; // 如果是export default 用这个
 import { routerConf } from './routerConf'; 
 
-function getRouterConf ( routerConf ) {
-  let myRoutes = [];
-  const routerConfFormat = (fPath, routerConf) => {
-    routerConf.forEach(( r ) => {
+function getRouterConf ( routerConf: any ) {
+  let myRoutes: Array<any> = [];
+  const routerConfFormat = (fPath: string, routerConf: any) => {
+    routerConf.forEach(( r: any ) => {
       const { path, component, layout, children, redirect } = r;
       let newPath = fPath === '/' ? path : fPath + path;
       if ( redirect ) {
@@ -33,7 +33,7 @@ function getRouterConf ( routerConf ) {
   return myRoutes;
 }
 const myRoutes = <Switch>{ getRouterConf(routerConf) }</Switch>;
-export const Routers = class extends React.Component {
+export const Routers = class extends React.Component<any, any> {
   render() {
     return ( 
       <Router history={history}> 
