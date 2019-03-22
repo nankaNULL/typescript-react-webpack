@@ -11,12 +11,11 @@
     // `vs code`所需要的，在开发时找到对应的路径，真实的引用是在`webpack`中配置的`alias`
     // 所以这个配置没有鬼用啊
     "paths": {
-      "@Common": [
-        "../src/common"
-      ],
-      "@Common/*": [
-        "../src/common/*"
-      ]
+      "@/*":["./src/*"],
+      "public/*": ["./public/*"],
+      "components/*": ["./src/components/*"],
+      "pages/*": ["./src/pages/*"],
+      "layout/*": ["./src/layout/*"]
     },
     // 开启装饰器的使用
     "experimentalDecorators": true,
