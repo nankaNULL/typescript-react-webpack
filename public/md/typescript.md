@@ -20,6 +20,8 @@ typescript-react之悲壮的踩坑之路
 
    (3) 类型检查
 
+   (4) antd
+
 4. TypeScript - React
 
    (1) 接口
@@ -28,8 +30,7 @@ typescript-react之悲壮的踩坑之路
 
 问题待解决：
 
-1. tsconfig 配置没写
-2. typescript 类型有哪些没写
+1. typescript 类型有哪些没写
 
 ------
 
@@ -193,6 +194,10 @@ typescript-react之悲壮的踩坑之路
    数组有点特别，元素类型[] 或者Array<元素类型> 两种写法
 
    然后万能的any，呵呵呵呵呵不知道是什么就写any，any用时一时爽，一直用一直爽
+
+##### antd
+
+1. antd要升级到最新版本，不然有些组件会报tagName missing，别问我为什么知道，自闭
 
 ------
 
