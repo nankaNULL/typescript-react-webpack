@@ -1,10 +1,12 @@
 import * as React from 'react';
 import { Menu, Layout, Button } from "antd";
 import { Link } from 'react-router-dom';
-import { MainLayoutState } from '../../constants/interfaces'
 import './style.scss';
 const { Header, Content, Footer } = Layout;
 
+interface MainLayoutState {
+  topNavData: any;
+}
 export default class MainLayout extends React.PureComponent<any, MainLayoutState>{
   constructor(props: any) {
     super(props);

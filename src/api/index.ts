@@ -7,9 +7,14 @@ function mapUrlObjToFuncObj(urlObj: any){
   // _.keys(urlObj)得到一个拿到所有对象名的数组，然后对这个数组遍历，key就是对象名
   _.keys(urlObj).forEach((key: string) => {
     API[key] = function(params: any){
-      let item: any = urlObj[key];
-      // return http[item.method](item.url, params)
-      return http.get(item.url, params)
+      let item = urlObj[key];
+      let newMethod = item.method;
+      switch(item.method){
+        case 'get': return http.get(item.url, params);
+        case 'post': return http.post(item.url, params);
+        default: return;
+      }
+      // return http[newMethod](item.url, params)
     }
   })
   return API;

@@ -10,11 +10,11 @@ import './style.scss';
 const { Header, Sider, Content, Footer } = Layout;
 const SubMenu = Menu.SubMenu;
 
-// interface CommonLayoutProps{
-//   location: any;
-//   menuList: any;
-//   getBookMenuList: any;
-// }
+interface CommonLayoutProps{
+  menuList: any;
+  getBookMenuList: any;
+  location: any;
+}
 interface CommonLayoutState{
   collapsed: boolean;
 }
@@ -23,18 +23,13 @@ interface CommonLayoutState{
   (state: any) => state.globalReducer,
   (dispatch: any) => bindActionCreators({ ...action }, dispatch)
 )
-export default class CommonLayout extends React.PureComponent<any, CommonLayoutState>{
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      collapsed: false
-    };
+export default class CommonLayout extends React.PureComponent<CommonLayoutProps, CommonLayoutState>{
+  state: CommonLayoutState = {
+    collapsed: false
   }
 
   componentDidMount() {
     this.getBookMenuList();
-    // console.log(API);
-    // API.getTheData();
     API.getTheData({}).then((res: any) => {
       console.log(res);
     });
