@@ -1,2 +1,2 @@
 # my-react
-尝试搭建脚手架
+typescript-react-webpack脚手架，参考pc-react-ant.design + 云日志 + 各种文档
