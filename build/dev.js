@@ -1,6 +1,5 @@
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const CopyWebpackPlugin = require('copy-webpack-plugin');
 const path = require('path');
 const buildPath = path.resolve(__dirname, '../dist');
 // const  theme = require('../antd-theme.js');
@@ -72,14 +71,8 @@ module.exports = {
       template: 'index.html',
     }),
     new webpack.NamedModulesPlugin(),
-    // new webpack.HotModuleReplacementPlugin(),
-    // new CopyWebpackPlugin([ 
-      // {from: path.resolve(__dirname,'../public/config'),to:'config'},
-      // {from: path.resolve(__dirname,'../public/mock'),to:'mock'},
-      // {from: path.resolve(__dirname,'../public/images'),to:'images'},
-      // {from: path.resolve(__dirname,'../public/fonts'),to:'fonts'},
-      // {from: path.resolve(__dirname,'../public/pages'),to:'pages'}
-    // ])
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.DefinePlugin({__PRODUCTION: JSON.stringify(false)}),
   ],
   devServer: {
     host: '0.0.0.0',

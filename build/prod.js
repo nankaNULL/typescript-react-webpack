@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const path = require('path');
 const buildPath = path.resolve(__dirname, '../dist');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -9,8 +10,8 @@ module.exports = {
   mode:'production',
   context:path.resolve(__dirname, '../src'), // 解析起点
   entry:{
-    vendor: ['react'],
-    app: ['./main.js']
+    vendor: ['react', 'react-dom', 'react-router', 'moment'],
+    app: ['babel-polyfill','./main.js']
   },
   output: {
     path: buildPath, // 输出文件存放在本地的目录
@@ -102,6 +103,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'index.html',
+      title: 'webpack-react'
     }),
     new webpack.NamedModulesPlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(true),
@@ -109,13 +111,14 @@ module.exports = {
       filename: 'css/[name].[hash].css',
       chunkFilename: 'css/[name].[hash].css'
     }),
-    // new CopyWebpackPlugin([
-    //   {from: path.resolve(__dirname,'../public/config'),to:'config'},
-    //   {from: path.resolve(__dirname,'../public/mock'),to:'mock'},
-    //   {from: path.resolve(__dirname,'../public/images'),to:'images'},
-    //   {from: path.resolve(__dirname,'../public/fonts'),to:'fonts'},
-    //   {from: path.resolve(__dirname,'../public/pages'),to:'pages'}
-    // ]),
+    new CopyWebpackPlugin([
+      {from: path.resolve(__dirname,'../public/md'),to:'md'},
+      // {from: path.resolve(__dirname,'../public/config'),to:'config'},
+      // {from: path.resolve(__dirname,'../public/mock'),to:'mock'},
+      // {from: path.resolve(__dirname,'../public/images'),to:'images'},
+      // {from: path.resolve(__dirname,'../public/fonts'),to:'fonts'},
+      // {from: path.resolve(__dirname,'../public/pages'),to:'pages'}
+    ]),
     new webpack.DefinePlugin({
       __PRODUCTION: JSON.stringify(true)
     }),
