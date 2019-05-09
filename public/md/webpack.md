@@ -6,12 +6,9 @@ webpack dev & prod config
 
 目录结构：
 
-1. 是是是
-
-遗留问题：
-
-1. HtmlWebpackPlugin插件的配置，
-2. externals里对应的
+1. 基础配置（以dev为例）
+2. prod 下的一些配置区别，还是上代码（部分）
+3. 总结
 
 参考文档：
 
@@ -19,13 +16,14 @@ webpack dev & prod config
 
 ------
 
-基础配置（以dev为例）
+### 基础配置（以dev为例）
 
 1. 这里直接贴代码然后注释吧，要详细些的话要写好多，在注释里写一些需要注意的地方吧
 
    ```
    const webpack = require('webpack');
    const HtmlWebpackPlugin = require('html-webpack-plugin');
+   const CopyWebpackPlugin = require('copy-webpack-plugin');
    const path = require('path');
    const buildPath = path.resolve(__dirname, '../dist');
    
@@ -98,16 +96,26 @@ webpack dev & prod config
      
      plugins: [ 
        new HtmlWebpackPlugin({
+         // 生成一个 HTML5 文件,
+         // 结合index.html来看，里面有对应的一些配置
+         // 另外要结合CopyWebpackPlugin，
          filename: 'index.html',
-         template: 'index.html',
+         template: 'index.html', // html5文件模板
          hash: false,
          chunksSortMode:'none',
-         title:'webpack-react',
-         assets: { // 这里的配置依然很懵逼
-           favicon: '/images/favicon.icon', 
+         assets: { // 一些参数，这些参数也可以移到外面去，
+           title:'webpack-react',
+           favicon: '/images/favicon.ico', 
            config_js: '/config/conf.dev.js'
          }
        }),
+       
+       new CopyWebpackPlugin([ 
+         // 这个插件是将单个文件或整个目录复制到构建目录
+         // 在build后的dist文件夹下能看到对应构建的文件夹
+         {from: path.resolve(__dirname,'../public/images'),to:'images'},
+         {from: path.resolve(__dirname,'../public/config'),to:'config'},
+       ])
        new webpack.NamedModulesPlugin(), // 热加载时直接返回更新文件名
        new webpack.HotModuleReplacementPlugin(),
        // 启用 HMR（热替换模块）配合使用的插件
@@ -135,7 +143,7 @@ webpack dev & prod config
      	// 这是外部扩展，是被剥离出来的，不需要依赖模块也可以展示的
      	// 一般放的是静态的文件
        'FRONT_CONF': 'FRONT_CONF'
-       // 这个具体怎么应用还没实践
+       // 这个实践之后是，文件在html中引入，然后就可以当做是全局变量来使用
      },
      
      devServer: {
@@ -158,9 +166,12 @@ webpack dev & prod config
    
    ```
 
-   
 
-2. prod 下的一些配置区别，还是上代码（部分）
+------
+
+### prod 下的一些配置区别，还是上代码（部分）
+
+1. 部分配置
 
    ```
    const webpack = require('webpack');
@@ -219,23 +230,25 @@ webpack dev & prod config
          filename: 'index.html',
          template: 'index.html',
          hash: false,
-         chunksSortMode: 'none',
-         title:'中金易云-门店端',
+         chunksSortMode:'none',
+         title:'webpack-react',
          assets: {
-           favicon: '/images/favicon.ico',
+           favicon: '/images/favicon.ico', 
            config_js: '/config/conf.prod.js'
          }
        }),
        new webpack.optimize.OccurrenceOrderPlugin(true),
+       // 我估摸这优化里配置的插件也是可以放在这里的，
+       // 如果放在优化里，就要用上这个插件，否则不用
+       
        new MiniCssExtractPlugin({
          // 打包css文件的插件
          filename: 'css/[name].[hash].css',
          chunkFilename: 'css/[name].[hash].css'
        }),
        new CopyWebpackPlugin([ 
-         // 这个插件是将单个文件或整个目录复制到构建目录
-         // 在build后的dist文件夹下能看到对应构建的文件夹
-         {from: path.resolve(__dirname,'../public/md'),to:'md'},
+         {from: path.resolve(__dirname,'../public/images'),to:'images'},
+         {from: path.resolve(__dirname,'../public/config'),to:'config'},
        ]),
        new webpack.DefinePlugin({
          __PRODUCTION: JSON.stringify(true)
@@ -246,6 +259,24 @@ webpack dev & prod config
    
    ```
 
+
+2. 运行生产环境需要放到服务器上，这里使用http-server搭建临时服务器
+
+   ```
+   "preview": "http-server dist/ -P https://api.github.com"
+   // -P后面是后端域名，（不然跨域会出问题
+   ```
+
    
 
-3. 
+------
+
+
+
+### 总结
+
+1. 最后感觉就是，还是回到最原始的html开发，你有html, js, css, images等文件，对应的有这么一个目录结构。
+2. 现在就是说，为了更加方便开发，你使用了框架，使用了很多第三方的库，安装了各种依赖，用了不同的语法，但最终的目的是浏览器能够识别并展示。
+3. 为此你使用了一些loader去解析，让他变成浏览器能理解的语言。
+4. 而后你用了一些插件，去把项目打包成一个html（HtmlWebpackPlugin），而打包成的项目他也有自己的一个目录结构，你也可以通过CopyWebpackPlugin去指定
+5. 这样。
