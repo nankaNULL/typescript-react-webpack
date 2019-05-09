@@ -8,8 +8,8 @@ module.exports = {
   devtool: 'cheap-module-eval-source-map',
   context:path.resolve(__dirname, '../src'), // 解析起点
   entry:{
-    vendor: ['react'],
-    app: ['./main.js']
+    vendor: ['react', 'react-dom', 'react-router', 'moment'],
+    app: ['babel-polyfill','./main.js']
   },
   output: {
     path: buildPath, // 输出文件存放在本地的目录
@@ -69,6 +69,13 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'index.html',
+      hash: false,
+      chunksSortMode:'none',
+      title:'webpack-react',
+      assets: {
+        favicon: '/images/logo.png', 
+        config_js: '/config/conf.dev.js'
+      }
     }),
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),

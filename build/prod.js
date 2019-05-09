@@ -103,9 +103,14 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'index.html',
-      title: 'webpack-react'
+      hash: false,
+      chunksSortMode: 'none',
+      title:'中金易云-门店端',
+      assets: {
+        favicon: '/images/favicon.ico',
+        config_js: '/config/conf.prod.js'
+      }
     }),
-    new webpack.NamedModulesPlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(true),
     new MiniCssExtractPlugin({
       filename: 'css/[name].[hash].css',
