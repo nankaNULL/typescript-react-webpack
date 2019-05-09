@@ -8,6 +8,10 @@ import CommonLayout from '@/layout/commonLayout';
 
 export const routerConf = [
   {
+    path: '/',
+    redirect: '/home',
+  },
+  {
     path: '/home',
     component: Home,
     layout: MainLayout
