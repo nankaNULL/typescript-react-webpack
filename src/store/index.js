@@ -17,7 +17,7 @@ const middlewares = [thunk.withExtraArgument({API}), middleware];
 
 const store = createStore(
   combineReducers({ routing: routerReducer, ...appReducer }),
-  composeWithDevTools(applyMiddleware(...middlewares)) // 这个是配合着使用redux devTools 的一个插件
-  // __PRODUCTION ? applyMiddleware(...middlewares): composeWithDevTools(applyMiddleware(...middlewares))
+  // composeWithDevTools(applyMiddleware(...middlewares)) // 这个是配合着使用redux devTools 的一个插件
+  __PRODUCTION ? applyMiddleware(...middlewares): composeWithDevTools(applyMiddleware(...middlewares))
 )
 export default store;
