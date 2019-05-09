@@ -104,10 +104,10 @@ module.exports = {
       filename: 'index.html',
       template: 'index.html',
       hash: false,
-      chunksSortMode: 'none',
+      chunksSortMode:'none',
       title:'webpack-react',
       assets: {
-        favicon: '/images/favicon.ico',
+        favicon: '/images/favicon.ico', 
         config_js: '/config/conf.prod.js'
       }
     }),
@@ -116,9 +116,9 @@ module.exports = {
       filename: 'css/[name].[hash].css',
       chunkFilename: 'css/[name].[hash].css'
     }),
-    new CopyWebpackPlugin([
-      {from: path.resolve(__dirname,'../public/md'),to:'md'},
-      // {from: path.resolve(__dirname,'../public/config'),to:'config'},
+    new CopyWebpackPlugin([ 
+      {from: path.resolve(__dirname,'../public/images'),to:'images'},
+      {from: path.resolve(__dirname,'../public/config'),to:'config'},
       // {from: path.resolve(__dirname,'../public/mock'),to:'mock'},
       // {from: path.resolve(__dirname,'../public/images'),to:'images'},
       // {from: path.resolve(__dirname,'../public/fonts'),to:'fonts'},

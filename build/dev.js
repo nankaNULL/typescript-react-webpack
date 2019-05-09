@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const path = require('path');
 const buildPath = path.resolve(__dirname, '../dist');
 // const  theme = require('../antd-theme.js');
@@ -73,13 +74,17 @@ module.exports = {
       chunksSortMode:'none',
       title:'webpack-react',
       assets: {
-        favicon: '/images/logo.png', 
+        favicon: '/images/favicon.ico', 
         config_js: '/config/conf.dev.js'
       }
     }),
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({__PRODUCTION: JSON.stringify(false)}),
+    new CopyWebpackPlugin([ 
+      {from: path.resolve(__dirname,'../public/images'),to:'images'},
+      {from: path.resolve(__dirname,'../public/config'),to:'config'},
+    ])
   ],
   devServer: {
     host: '0.0.0.0',
