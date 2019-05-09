@@ -105,7 +105,7 @@ module.exports = {
       template: 'index.html',
       hash: false,
       chunksSortMode: 'none',
-      title:'中金易云-门店端',
+      title:'webpack-react',
       assets: {
         favicon: '/images/favicon.ico',
         config_js: '/config/conf.prod.js'
