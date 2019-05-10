@@ -1,0 +1,57 @@
+$font-url :"/fonts/iconfont";
+@font-face {
+  font-family: 'yuwan';
+  src: url('#{$font-url}.eot'); /* IE9*/
+  src:
+  /* IE6-IE8 */
+  url('#{$font-url}.eot?#iefix') format('embedded-opentype'),
+  /* chrome、firefox */
+  url('#{$font-url}.woff') format('woff'),
+  /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+  url('#{$font-url}.ttf') format('truetype'),
+  /* iOS 4.1- */
+  url('#{$font-url}.svg#iconfont') format('svg');
+}
+.yuwan {
+  font-family: "yuwan" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-search:before {
+  content: "\e71d";
+}
+
+.icon-zhiboguankanshu:before {
+  content: "\e665";
+}
+
+.icon-Bbi:before {
+  content: "\e667";
+}
+
+.icon-shoucang:before {
+  content: "\e669";
+}
+
+.icon-shoucangtianchong:before {
+  content: "\e66a";
+}
+
+.icon-bofangqi-danmukai:before {
+  content: "\e697";
+}
+
+.icon-bofangqi-bofangxiaodianshi:before {
+  content: "\e6ab";
+}
+
+.icon-bilibili:before {
+  content: "\e6b4";
+}
+
+.icon-zan:before {
+  content: "\e6c5";
+}

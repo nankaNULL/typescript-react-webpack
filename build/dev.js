@@ -59,7 +59,7 @@ module.exports = {
           'style-loader', //上面的简写方式
           'css-loader',
           'sass-loader',
-          '@alifd/next-theme-loader?{"theme":"@alifd/theme-ice-orange"}'
+          '@alifd/next-theme-loader?{"theme":"@alifd/theme-4"}'
         ]
       },
       {
@@ -86,8 +86,9 @@ module.exports = {
     new CopyWebpackPlugin([ 
       {from: path.resolve(__dirname,'../public/images'),to:'images'},
       {from: path.resolve(__dirname,'../public/config'),to:'config'},
+      {from: path.resolve(__dirname,'../public/fonts'),to:'fonts'},
     ]),
-    new ThemePlugin({ theme: '@alifd/theme-ice-orange' }),
+    new ThemePlugin({ theme: '@alifd/theme-4' }),
   ],
   devServer: {
     host: '0.0.0.0',

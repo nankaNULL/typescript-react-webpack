@@ -121,7 +121,7 @@ module.exports = {
       {from: path.resolve(__dirname,'../public/config'),to:'config'},
       // {from: path.resolve(__dirname,'../public/mock'),to:'mock'},
       // {from: path.resolve(__dirname,'../public/images'),to:'images'},
-      // {from: path.resolve(__dirname,'../public/fonts'),to:'fonts'},
+      {from: path.resolve(__dirname,'../public/fonts'),to:'fonts'},
       // {from: path.resolve(__dirname,'../public/pages'),to:'pages'}
     ]),
     new webpack.DefinePlugin({
