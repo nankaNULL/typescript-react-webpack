@@ -20,8 +20,8 @@ yarn add @alifd/theme-4
 yarn add @alifd/next-theme-loader @alifd/next-theme-webpack-plugin
 
 ```
-按需引入配置
-1. babel配置修改
+2. 按需引入配置
+(1) babel配置修改
 ```
 "plugins": [
   ["import",[
@@ -31,7 +31,7 @@ yarn add @alifd/next-theme-loader @alifd/next-theme-webpack-plugin
   ...
 ]
 ```
-2. webpack 配置
+(2) webpack 配置
 ```
 module: {
  rules: [
@@ -51,4 +51,12 @@ plugins: [
 ]
 
 ```
+3. 注意点
+```
+官方文档在主题包css文件按需引入的webpack配置中用了extract-text-webpack-plugin
+但这个插件默认安装的版本是不支持webpack4.x的，但他又一个4.0的beta版本支持webpack4.x
+因此 yarn add extract-text-webpack-plugin@next -D
+
+```
+
 
