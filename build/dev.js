@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const path = require('path');
 const buildPath = path.resolve(__dirname, '../dist');
+const ThemePlugin = require('@alifd/next-theme-webpack-plugin');
 // const  theme = require('../antd-theme.js');
 module.exports = {
   mode:'development',
@@ -36,7 +37,7 @@ module.exports = {
         test: /\.js|jsx$/,
         exclude: /node_modules/, // exclude不包括，include只命中
         use:['babel-loader?cacheDirectory'],
-        // use: { // 这算是第二种写法，和上面的意义是一样的
+         // use: { // 这算是第二种写法，和上面的意义是一样的
         //   loader: 'babel-loader',
         //   options: {
         //     cacheDirectory:true
@@ -46,18 +47,19 @@ module.exports = {
       {
         test: /\.(less|css)$/,
         use: [
-          'style-loader',
-          'css-loader',
-          'less-loader'
-          // 'less-loader?{modifyVars:'+JSON.stringify(theme)+'}'
-        ],
+            'style-loader',
+            'css-loader',
+            'less-loader'
+            // 'less-loader?{modifyVars:'+JSON.stringify(theme)+'}'
+          ],
       },
       {
         test: /\.(scss|sass)$/,
         use: [
           'style-loader', //上面的简写方式
           'css-loader',
-          'sass-loader'
+          'sass-loader',
+          '@alifd/next-theme-loader?{"theme":"@alifd/theme-ice-orange"}'
         ]
       },
       {
@@ -84,7 +86,8 @@ module.exports = {
     new CopyWebpackPlugin([ 
       {from: path.resolve(__dirname,'../public/images'),to:'images'},
       {from: path.resolve(__dirname,'../public/config'),to:'config'},
-    ])
+    ]),
+    new ThemePlugin({ theme: '@alifd/theme-ice-orange' }),
   ],
   devServer: {
     host: '0.0.0.0',

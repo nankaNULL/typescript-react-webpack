@@ -10,6 +10,9 @@
     "preview": "http-server dist/ -P https://api.github.com"
   },
   "dependencies": {
+    "@alifd/next": "^1.14.2",
+    "@alifd/theme-4": "^0.0.15",
+    "@alifd/theme-ice-orange": "^1.0.1",
     "antd": "^3.14.1",
     "lodash": "^4.17.11",
     "mirror-creator": "^1.1.0",
@@ -22,6 +25,8 @@
     "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
+    "@alifd/next-theme-loader": "^1.3.1",
+    "@alifd/next-theme-webpack-plugin": "^1.0.1",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-plugin-import": "^1.6.2",
