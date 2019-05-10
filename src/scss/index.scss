@@ -1,0 +1,30 @@
+@import './variable.scss';
+@import './common.scss';
+@import './reset.scss';
+@import './icon.scss';
+.clearfix {
+  &:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+  }
+}
+.color-primary{
+  color: $primary-color !important;
+}
+.overflow-ellipsis{
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}
+.pointer{
+  cursor: pointer;
+}
+#root{
+  display: flex;
+  height: 100%;
+  font-size: 12px;
+}
