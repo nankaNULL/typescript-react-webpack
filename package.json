@@ -18,6 +18,7 @@
     "mirror-creator": "^1.1.0",
     "react": "^16.4.2",
     "react-dom": "16.4.2",
+    "react-grid-layout": "^0.16.6",
     "react-redux": "^5.0.5",
     "react-router-dom": "^4.3.1",
     "react-router-redux": "^4.0.8",
