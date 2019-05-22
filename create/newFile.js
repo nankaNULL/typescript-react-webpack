@@ -13,12 +13,20 @@ componentRename = (answer) => {
   newName = answer;
   newPath = path.resolve('./src/components/', newName);
   template = `import React from 'react';
+import PropTypes from 'prop-types';
 
 export default class ${newName} extends React.PureComponent{
+  static defaultProps = {
+
+  };
+  static propsTypes = {
+
+  };
+  
   render () {
     return (
-      <div className="page-${newName}">
-      ${newName}
+      <div className="page-component-${newName}">
+        ${newName}
       </div>
     )
   }
@@ -35,7 +43,7 @@ export default class ${newName} extends React.PureComponent{
   render () {
     return (
       <div className="page-${newName}">
-      ${newName}
+        ${newName}
       </div>
     )
   }
