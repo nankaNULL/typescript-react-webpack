@@ -7,7 +7,9 @@
     "dev": "webpack-dev-server --progress --colors --config ./build/dev.js",
     "test-watch": "karma start --auto-watch --no-single-run",
     "start": "npm run dev",
-    "preview": "http-server dist/ -P https://api.github.com"
+    "preview": "http-server dist/ -P https://api.github.com",
+    "new-component": "node ./create/newFile.js component",
+    "new-page": "node ./create/newFile.js page"
   },
   "dependencies": {
     "@alifd/next": "^1.14.2",
