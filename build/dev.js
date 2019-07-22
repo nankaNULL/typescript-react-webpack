@@ -11,7 +11,7 @@ module.exports = {
   context:path.resolve(__dirname, '../src'), // 解析起点
   entry:{
     vendor: ['react', 'react-dom', 'react-router', 'moment'],
-    app: ['@babel/polyfill','./main.js']
+    app: ['./main.js']
   },
   output: {
     path: buildPath, // 输出文件存放在本地的目录
