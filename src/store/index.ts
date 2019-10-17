@@ -5,11 +5,7 @@ import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { API } from '@/api';
 
-import globalReducer from './reducer';
-
-const appReducer = {
-  globalReducer
-};
+import { appReducer } from './reducer';
 
 export const history = createHistory();
 const middleware = routerMiddleware(history);
