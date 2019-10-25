@@ -4,16 +4,15 @@ import { bookActions } from "./models";
 import { bindActionCreators } from "redux";
 import { Layout, Menu, Icon, Button } from 'antd';
 import { Link, withRouter } from 'react-router-dom';
-import MainLayout from '../mainLayout';
+import MainLayout, { MainLayoutProps } from '../mainLayout';
 import { API } from '@/api';
 import './style.scss';
 const { Header, Sider, Content, Footer } = Layout;
 const SubMenu = Menu.SubMenu;
 
-interface CommonLayoutProps {
+interface CommonLayoutProps extends MainLayoutProps {
   menuList: Array<Object>;
   bookList: Array<Object>;
-  globalTest: string;
   getBookMenuList: Function;
   getApiList: Function;
   location: {
@@ -26,8 +25,7 @@ interface CommonLayoutState {
 
 @connect(
   (state: any) => ({
-    ...state.book,
-    globalTest: state.global.globalTest
+    ...state.book
   }),
   dispatch => bindActionCreators({ ...bookActions }, dispatch)
 )

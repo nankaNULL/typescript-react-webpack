@@ -13,6 +13,9 @@ body{
         height:64px;
         line-height: 64px;
       }
+      &.ant-layout-header{
+        padding-right: 20px;
+      }
     }
     .content{
       position: absolute;
@@ -27,5 +30,11 @@ body{
       width:100%;
       background: #fff;
     }
+  }
+  .ant-dropdown-menu-item > a{
+    display: inline;
+  }
+  .ml-10{
+    margin-left: 10px;
   }
 }

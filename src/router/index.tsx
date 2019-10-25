@@ -42,3 +42,13 @@ export const Routers = class extends React.Component<{}, {}> {
     );
   }
 }
+
+  // < Router history = { history } >
+  //   < Switch >
+  //     <Route exact path="/login" component={Login} />
+  //     <MainLayout>
+  //       <Route path="/home" component={Home} />
+  //       <Route path="/list" component={List} />
+  //     </MainLayout>
+  //   </Switch >
+  // </Router >
