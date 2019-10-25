@@ -1,0 +1,12 @@
+.page-login{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  .login-form{
+    border: 1px solid #e5e5e5;
+    border-radius: 5px;
+    padding: 30px 70px;
+    background: #fff;
+  }
+}
