@@ -3,8 +3,10 @@ import BookRank1 from '@/pages/common/bookrank';
 import BookRank2 from '@/pages/common/bookRank1';
 import BookRank3 from '@/pages/common/bookrank2';
 import List from '@/pages/list';
+import Login from '@/pages/login';
 import MainLayout from '@/layout/mainLayout';
 import CommonLayout from '@/layout/commonLayout';
+import Exception from '@/pages/exception';
 
 export const routerConf = [
   {
@@ -37,5 +39,13 @@ export const routerConf = [
     path: '/list',
     component: List,
     layout: MainLayout
+  },
+  {
+    path: '/login',
+    component: Login,
+    layout: MainLayout
+  }, {
+    path: '*',
+    component: Exception
   }
 ];

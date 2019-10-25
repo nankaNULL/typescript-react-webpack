@@ -10,7 +10,10 @@ class Http{
   }
 
   post(url: string, body: any) {
-    let options:any = { method:'POST'};
+    let options:any = { 
+      method:'POST',
+      // credentials: 'include'
+    };
     if (body) options.body = JSON.stringify(body);
     options.headers = this.defaultHeader()
     return this.request(url, options)
@@ -32,14 +35,15 @@ class Http{
       // 异常处理
       if (err === 401) {
         message.warn('您还没有登录或登录已过期，请登录!');
-        // setTimeout(() => {
-        //     const url = `${LOGAPICONF.LOGINURL}`;
-        //     this.redirectWay(url)
-        // }, 1000);
+        setTimeout(() => {
+          window.location.href = `/login`; 
+            // const url = `${LOGAPICONF.LOGINURL}`;
+            // this.redirectWay(url)
+        }, 1000);
       } else if (err=== 403 || err === 402) {
-        window.location.href = '/home'; 
+        window.location.href = `/exception/${err}`; 
       } else if (err === 404) {
-        window.location.href = '/list';
+        message.error('请求的接口不存在');
       } else {
         message.error(`请求错误`);
       }
