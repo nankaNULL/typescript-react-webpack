@@ -88,14 +88,22 @@ module.exports = {
     historyApiFallback: true,
     // disableHostCheck: true,
     // compress: true,
-    // hot: true, // 开启模块热替换功能
+    hot: true, // 开启模块热替换功能
     // inline:true, // 自动刷新网页实现实时预览
-    // proxy: [{
-    //   path: '/api',
-    //   // target: 'http://172.16.0.98:8788',//本地
-    //   target: 'http://47.101.183.209:8788',//测试
-    //   changeOrigin: true
-    // }]
+     // before: function (app) {
+    //   apiMocker(app, path.resolve('./mock/index.js'), {
+    //     proxy: {
+    //       '/log/api/v2/*': 'http://127.0.0.1:8080',
+    //     },
+    //     secure: false,
+    //   })
+    // },
+    proxy: [{
+      path: '/api',
+      // target: 'http://172.16.0.98:8788',//本地
+      target: 'http://192.168.1.129:3000',//测试
+      changeOrigin: true
+    }]
   }
 };
 
