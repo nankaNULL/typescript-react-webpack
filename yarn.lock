@@ -859,6 +859,25 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
+"@types/connect@*":
+  version "3.4.32"
+  resolved "https://registry.yarnpkg.com/@types/connect/-/connect-3.4.32.tgz#aa0e9616b9435ccad02bc52b5b454ffc2c70ba28"
+  integrity sha512-4r8qa0quOvh7lGD0pre62CAb1oni1OO6ecJLGCezTmhQ8Fz50Arx9RUszryR8KlgK6avuSXvviL6yWyViQABOg==
+  dependencies:
+    "@types/node" "*"
+
+"@types/http-server@^0.10.0":
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/@types/http-server/-/http-server-0.10.0.tgz#f5fe4a136ac4b2e5b5c25d017bb79310eafe5ece"
+  integrity sha512-bpuBiQM3GBd89Abzp/Spktt/ZIVSR8ccNBJgqUHf5KNow80t4ZFXfvTxzd96uHrwQQngbTqMulQPWbuFczYdfg==
+  dependencies:
+    "@types/connect" "*"
+
+"@types/node@*":
+  version "12.12.8"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.12.8.tgz#dab418655af39ce2fa99286a0bed21ef8072ac9d"
+  integrity sha512-XLla8N+iyfjvsa0KKV+BP/iGSoTmwxsu5Ci5sM33z9TjohF72DEz95iNvD6pPmemvbQgxAv/909G73gUn8QR7w==
+
 "@types/prop-types@*":
   version "15.7.0"
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.0.tgz#4c48fed958d6dcf9487195a0ef6456d5f6e0163a"
