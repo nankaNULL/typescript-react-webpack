@@ -5,11 +5,9 @@ import { Routers } from './router';
 import store from './store'
 
 // 这里是新建的分支typescript
-const render = (Component: any) => 
-  ReactDOM.render(
+ReactDOM.render(
     <Provider store={store}>
-      <Component />
+        <Routers />
     </Provider>,
     document.getElementById('root')
-  )
-render(Routers)
+)

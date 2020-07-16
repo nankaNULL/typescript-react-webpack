@@ -1,7 +1,7 @@
-export function createActionType(arrayNames: Array<string>) {
-  let actionTypeObj: any = {};
-  arrayNames.forEach((item: string) => {
-    actionTypeObj[item] = item;
-  })
-  return actionTypeObj;
+export function createActionType (arrayNames: string[]): any {
+    const actionTypeObj: any = {};
+    arrayNames.forEach((item: string) => {
+        actionTypeObj[item] = item;
+    })
+    return actionTypeObj;
 }
