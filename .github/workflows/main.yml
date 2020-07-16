@@ -21,22 +21,21 @@ jobs:
           node-version: 12
           registry-url: https://registry.npmjs.org/
       - name: install
-        run: npm install --unsafe-perm=true --allow-root
-        env:
-          CI: true
+        run: |
+          npm install
+          npm -v
+          npx eslint -v
   code_quality:
     needs: before_script
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
-        with:
+        with: 
           node-version: 12
           registry-url: https://registry.npmjs.org/
       - name: lint
         run: npm run lint
-        env:
-          CI: true
   
   # 当 merge_requests 执行 tsc 类型检查
   check_types:
@@ -49,9 +48,9 @@ jobs:
           node-version: 12
           registry-url: https://registry.npmjs.org/
       - name: check-types
-        run: npm run check-types
-        env:
-          CI: true
+        run: |
+          npx eslint -v
+          npm run check-types
 
   # This workflow contains a single job called "build"
   build:
