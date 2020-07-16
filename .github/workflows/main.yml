@@ -21,9 +21,8 @@ jobs:
           node-version: 12
           registry-url: https://registry.npmjs.org/
       - name: install
-        run: 
-          npm cache verify
-          npm install --unsafe-perm=true --allow-root
+      - run: npm cache verify
+      - run: npm install --unsafe-perm=true --allow-root
         env:
           CI: true
   code_quality:
