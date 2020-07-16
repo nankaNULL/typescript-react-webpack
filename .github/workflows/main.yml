@@ -27,6 +27,7 @@ jobs:
         env:
           CI: true
   code_quality:
+    needs: before_script
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
@@ -41,6 +42,7 @@ jobs:
   
   # 当 merge_requests 执行 tsc 类型检查
   check_types:
+    needs: before_script
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
