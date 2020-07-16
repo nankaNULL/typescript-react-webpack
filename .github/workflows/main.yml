@@ -12,6 +12,20 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+  before_script:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+          registry-url: https://registry.npmjs.org/
+      - name: install
+        run: 
+          npm cache verify
+          npm install --unsafe-perm=true --allow-root
+        env:
+          CI: true
   code_quality:
     runs-on: macos-latest
     steps:
