@@ -13,7 +13,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   code_quality:
-    runs-on: ubuntu-lates
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -27,7 +27,7 @@ jobs:
   
   # 当 merge_requests 执行 tsc 类型检查
   check_types:
-    runs-on: ubuntu-lates
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
