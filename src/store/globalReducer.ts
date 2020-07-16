@@ -5,7 +5,12 @@ const actionType = createActionType([
     'GET_USER_INFO'
 ])
 
-const initialState = {
+interface GlobalState {
+    user_token: string,
+    userInfo: any
+}
+
+const initialState: GlobalState = {
     user_token: '',
     userInfo: {}
 }

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Router, Route, Switch, Redirect } from 'react-router-dom';
-import createHistory from 'history/createBrowserHistory';
+import { createBrowserHistory } from 'history';
 // import routerConf from './routerConf.js'; // 如果是export default 用这个
 import { routerConf } from './routerConf';
-export const history = createHistory();
+export const history = createBrowserHistory();
 
 function getRouterConf(routerConf: any) {
     const myRoutes: any[] = [];
@@ -14,7 +14,7 @@ function getRouterConf(routerConf: any) {
             if (redirect) {
                 myRoutes.push(<Redirect exact key={redirect} from={path} to={redirect}></Redirect>)
             } else if (layout) {
-                myRoutes.push(<Route exact key={newPath} path={newPath} render={(props) => {
+                myRoutes.push(<Route exact key={newPath} path={newPath} render={(props: any) => {
                     return React.createElement(
                         layout,
                         props,

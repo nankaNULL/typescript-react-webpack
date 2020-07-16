@@ -14,7 +14,7 @@ interface MainLayoutState {
 }
 
 export interface MainLayoutProps {
-    className: string;
+    className?: string;
     location: any;
     userInfo: any;
     fetchUserInfo: (params?: any) => void;

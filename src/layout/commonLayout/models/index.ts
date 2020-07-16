@@ -1,11 +1,16 @@
 import { createActionType } from '@/store/actionType';
 
+interface BookState {
+    menuList: any[];
+    bookList: any[];
+}
+
 const actionType = createActionType([
     'BOOK_MENU_LIST',
     'BOOK_LIST'
 ])
 
-const initialState = {
+const initialState: BookState = {
     menuList: [],
     bookList: []
 };
