@@ -7,8 +7,8 @@
     "dev": "webpack-dev-server --progress --colors --config ./build/dev.js",
     "test-watch": "karma start --auto-watch --no-single-run",
     "start": "npm run dev",
-    "check-types": "tsc --skipLibCheck",
-    "lint": "eslint './src/**/*.ts' './src/**/*.tsx'",
+    "check-types": "npx tsc --skipLibCheck",
+    "lint": "npx eslint './src/**/*.ts' './src/**/*.tsx'",
     "lint-fix": "npx eslint './src/**/*.ts' './src/**/*.tsx' --fix",
     "preview": "http-server dist/ -P http://172.16.10.37/"
   },

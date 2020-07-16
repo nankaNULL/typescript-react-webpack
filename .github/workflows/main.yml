@@ -21,10 +21,7 @@ jobs:
           node-version: 12
           registry-url: https://registry.npmjs.org/
       - name: install
-        run: |
-          npm install
-          npm -v
-          npx eslint -v
+        run: npm install --unsafe-perm=true --allow-root
   code_quality:
     needs: before_script
     runs-on: macos-latest
@@ -48,9 +45,7 @@ jobs:
           node-version: 12
           registry-url: https://registry.npmjs.org/
       - name: check-types
-        run: |
-          npx eslint -v
-          npm run check-types
+        run: npm run check-types
 
   # This workflow contains a single job called "build"
   build:
