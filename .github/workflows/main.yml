@@ -45,7 +45,9 @@ jobs:
           node-version: 12
           registry-url: https://registry.npmjs.org/
       - name: check-types
-        run: npm run check-types
+        run: |
+          npm ci
+          npm run check-types
 
   # This workflow contains a single job called "build"
   build:
