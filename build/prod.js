@@ -6,11 +6,11 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 module.exports = {
-  mode:'production',
-  context:path.resolve(__dirname, '../src'), // 解析起点
-  entry:{
+  mode: 'production',
+  context: path.resolve(__dirname, '../src'), // 解析起点
+  entry: {
     vendor: ['react'],
-    app: ['./main.js']
+    app: ['./main']
   },
   output: {
     path: buildPath, // 输出文件存放在本地的目录
@@ -19,53 +19,58 @@ module.exports = {
     filename: 'js/[name].[hash].js'
   },
   resolve: { // 配置 Webpack 如何寻找模块所对应的文件
-    extensions: ['.js', '.jsx', '.scss', '.css', '.json'], // 用于配置在尝试过程中用到的后缀列表
+    extensions: ['.js', '.jsx', '.ts', '.tsx', '.scss', '.css', '.json'], // 用于配置在尝试过程中用到的后缀列表
     alias: { // 别名
-      '@':path.resolve(__dirname,'../src'),
+      '@': path.resolve(__dirname, '../src'),
       'public': path.resolve(__dirname, '../public'),
       'components': path.resolve(__dirname, '../src/components/'),
       'pages': path.resolve(__dirname, '../src/pages/'),
       'layout': path.resolve(__dirname, '../src/layout/')
     }
   },
-  externals :{
+  externals: {
     'FRONT_CONF': 'FRONT_CONF'
   },
-  module: { 
+  module: {
     rules: [{ // 配置模块的读取和解析规则，通常用来配置 Loader
-        test: /\.js|jsx$/,
-        exclude: /node_modules/, // exclude不包括，include只命中
-        use:['babel-loader?cacheDirectory'],
-      },
-      {
-        test: /\.(less|css)$/,
-        use: [
-          'style-loader',
-          'css-loader',
-          {
-            loader: "less-loader",
-            options: {
-              javascriptEnabled: true
-            }
+      test: /\.js|jsx$/,
+      exclude: /node_modules/, // exclude不包括，include只命中
+      use: ['babel-loader?cacheDirectory'],
+    },
+    {
+      test: /\.ts|tsx?$/,
+      use: ['babel-loader', 'ts-loader'],
+      exclude: /node_modules/,
+    },
+    {
+      test: /\.(less|css)$/,
+      use: [
+        'style-loader',
+        'css-loader',
+        {
+          loader: "less-loader",
+          options: {
+            javascriptEnabled: true
           }
-        ],
-      },
-      {
-        test: /\.(scss|sass)$/,
-        use: [
-          'style-loader', //上面的简写方式
-          'css-loader',
-          'sass-loader'
-        ]
-      },
-      {
-        test: /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)(\?[tv]=[\d.]+)*$/,
-        use: ['file-loader?name=[name].[ext]']
-      }
+        }
+      ],
+    },
+    {
+      test: /\.(scss|sass)$/,
+      use: [
+        'style-loader', //上面的简写方式
+        'css-loader',
+        'sass-loader'
+      ]
+    },
+    {
+      test: /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)(\?[tv]=[\d.]+)*$/,
+      use: ['file-loader?name=[name].[ext]']
+    }
     ]
   },
-  performance: { 
-    hints: false, 
+  performance: {
+    hints: false,
   },
   optimization: {
     runtimeChunk: {
