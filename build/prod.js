@@ -3,9 +3,39 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 const buildPath = path.resolve(__dirname, '../dist');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+// const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-module.exports = {
+const SpeedMeasurePlugin = require('speed-measure-webpack-plugin');
+const smp = new SpeedMeasurePlugin();
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
+const threadLoader = require('thread-loader');
+
+const jsWorkerPool = {
+  // options
+
+  // 产生的 worker 的数量，默认是 (cpu 核心数 - 1)
+  // 当 require('os').cpus() 是 undefined 时，则为 1
+  workers: 2,
+
+  // 闲置时定时删除 worker 进程
+  // 默认为 500ms
+  // 可以设置为无穷大， 这样在监视模式(--watch)下可以保持 worker 持续存在
+  poolTimeout: 2000
+};
+
+const cssWorkerPool = {
+  // 一个 worker 进程中并行执行工作的数量
+  // 默认为 20
+  workerParallelJobs: 2,
+  poolTimeout: 2000
+};
+
+threadLoader.warmup(jsWorkerPool, ['babel-loader', 'ts-loader']);
+threadLoader.warmup(cssWorkerPool, ['css-loader', 'less-loader']);
+
+const config = {
   mode: 'production',
   context: path.resolve(__dirname, '../src'), // 解析起点
   entry: {
@@ -19,7 +49,7 @@ module.exports = {
     filename: 'js/[name].[hash].js'
   },
   resolve: { // 配置 Webpack 如何寻找模块所对应的文件
-    extensions: ['.js', '.jsx', '.ts', '.tsx', '.scss', '.css', '.json'], // 用于配置在尝试过程中用到的后缀列表
+    extensions: ['.ts', '.tsx', '.js', '.jsx', '.scss', '.css', '.json'], // 用于配置在尝试过程中用到的后缀列表
     alias: { // 别名
       '@': path.resolve(__dirname, '../src'),
       'public': path.resolve(__dirname, '../public'),
@@ -35,17 +65,38 @@ module.exports = {
     rules: [{ // 配置模块的读取和解析规则，通常用来配置 Loader
       test: /\.js|jsx$/,
       exclude: /node_modules/, // exclude不包括，include只命中
-      use: ['babel-loader?cacheDirectory'],
+      use: [
+        {
+          loader: 'thread-loader',
+          options: jsWorkerPool
+        },
+        'babel-loader?cacheDirectory'
+      ],
     },
     {
       test: /\.ts|tsx?$/,
-      use: ['babel-loader', 'ts-loader'],
+      use: [
+        {
+          loader: 'thread-loader',
+          options: jsWorkerPool
+        },
+        'babel-loader?cacheDirectory',
+        {
+          loader: 'ts-loader',
+          options: {
+            happyPackMode: true
+          }
+        }
+      ],
       exclude: /node_modules/,
     },
     {
       test: /\.(less|css)$/,
-      use: [
-        'style-loader',
+      use: ['style-loader',
+        {
+          loader: 'thread-loader',
+          options: cssWorkerPool
+        },
         'css-loader',
         {
           loader: "less-loader",
@@ -79,10 +130,16 @@ module.exports = {
     minimize: true,
     noEmitOnErrors: true,
     minimizer: [
-      new UglifyJsPlugin({
+      new TerserPlugin({
         cache: true,
         parallel: true,
-        sourceMap: false
+        sourceMap: false,
+        terserOptions: {
+          compress: {
+            drop_console: true,
+            drop_debugger: true
+          }
+        }
       }),
       new OptimizeCSSAssetsPlugin({})
     ],
@@ -128,6 +185,8 @@ module.exports = {
     new webpack.DefinePlugin({
       __PRODUCTION: JSON.stringify(true)
     }),
+    // new BundleAnalyzerPlugin()
   ]
 };
 
+module.exports = smp.wrap(config);

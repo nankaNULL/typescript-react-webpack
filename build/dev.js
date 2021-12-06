@@ -75,7 +75,7 @@ module.exports = {
       template: 'index.html',
     }),
     new webpack.NamedModulesPlugin(),
-    // new webpack.HotModuleReplacementPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
     // new CopyWebpackPlugin([ 
     // {from: path.resolve(__dirname,'../public/config'),to:'config'},
     // {from: path.resolve(__dirname,'../public/mock'),to:'mock'},
@@ -105,7 +105,7 @@ module.exports = {
     proxy: [{
       path: '/api',
       // target: 'http://172.16.0.98:8788',//本地
-      target: 'http://192.168.1.129:3000',//测试
+      target: 'http://127.0.0.1:3000',//测试
       changeOrigin: true
     }]
   }
