@@ -50,17 +50,20 @@ typescript-react之悲壮的踩坑之路
 
 ------
 
-### typescript的相关配置
+### typescript 的相关配置
 
-1. 先尝试替换一个影响不大的组件，前面balabala一堆的跳过，嗯终于看到一句醒脑的话，
+1. 先尝试替换一个影响不大的组件，前面 balabala 一堆的跳过，嗯终于看到一句醒脑的话，
 
-   typescript的相关配置
+   typescript 的相关配置
 
-2. ts的配置分为两块，一个是webpack里的配置，还有一个是tsconfig的配置
+2. ts 的配置分为两块，一个是 webpack 里的配置，还有一个是 tsconfig 的配置
+
+3. 2021-12-27 号补充，babel 7 之后支持对 typescript 做处理，会将 typescript 编译为 javascript，不在需要依赖 ts-loader，不过这将会导致失去 typescript 的类型校验。
+   具体操作，将 webpack 中的 ts-loader 剔除，在 babel 里配置上 @babel/preset-typescript
 
 ##### webpack
 
-1. 首先是webpack里，对ts,tsx文件的解析，用到ts-loader 和 babel-loader，将ts中的一些特性转为最终可执行的js代码。好，开始装包
+1. 首先是 webpack 里，对 ts, tsx 文件的解析，用到 ts-loader 和 babel-loader，将 ts 中的一些特性转为最终可执行的 js 代码。好，开始装包
 
    ```
    yarn add ts-loader -D

@@ -5,6 +5,7 @@ const buildPath = path.resolve(__dirname, '../dist');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const SpeedMeasurePlugin = require('speed-measure-webpack-plugin');
 const smp = new SpeedMeasurePlugin();
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
@@ -31,7 +32,7 @@ const cssWorkerPool = {
     poolTimeout: 2000
 };
 
-threadLoader.warmup(jsWorkerPool, ['babel-loader', 'ts-loader']);
+threadLoader.warmup(jsWorkerPool, ['babel-loader']);
 threadLoader.warmup(cssWorkerPool, ['css-loader', 'less-loader']);
 
 const config = {
@@ -62,7 +63,7 @@ const config = {
     },
     module: {
         rules: [{ // 配置模块的读取和解析规则，通常用来配置 Loader
-            test: /\.js|jsx$/,
+            test: /\.[jt]sx?$/,
             exclude: /node_modules/, // exclude不包括，include只命中
             use: [
                 {
@@ -71,23 +72,6 @@ const config = {
                 },
                 'babel-loader?cacheDirectory'
             ],
-        },
-        {
-            test: /\.ts|tsx?$/,
-            use: [
-                {
-                    loader: 'thread-loader',
-                    options: jsWorkerPool
-                },
-                'babel-loader?cacheDirectory',
-                {
-                    loader: 'ts-loader',
-                    options: {
-                        happyPackMode: true
-                    }
-                }
-            ],
-            exclude: /node_modules/,
         },
         {
             test: /\.(less|css)$/,
@@ -101,7 +85,9 @@ const config = {
                 {
                     loader: "less-loader",
                     options: {
-                        javascriptEnabled: true
+                        lessOptions: {
+                            javascriptEnabled: true
+                        }
                     }
                 }
             ],
@@ -169,13 +155,13 @@ const config = {
             filename: 'css/[name].[hash].css',
             chunkFilename: 'css/[name].[hash].css'
         }),
-        // new CopyWebpackPlugin([
-        //   {from: path.resolve(__dirname,'../public/config'),to:'config'},
-        //   {from: path.resolve(__dirname,'../public/mock'),to:'mock'},
-        //   {from: path.resolve(__dirname,'../public/images'),to:'images'},
-        //   {from: path.resolve(__dirname,'../public/fonts'),to:'fonts'},
-        //   {from: path.resolve(__dirname,'../public/pages'),to:'pages'}
-        // ]),
+        new CopyWebpackPlugin({
+            patterns: [
+                { from: path.resolve(__dirname, '../src/public/config'), to: 'config' },
+                // { from: path.resolve(__dirname, '../src/public/imgs'), to: 'imgs' },
+                // { from: path.resolve(__dirname, '../src/public/fonts'), to: 'fonts' }
+            ]
+        }),
         new webpack.DefinePlugin({
             __PRODUCTION: JSON.stringify(true)
         }),

@@ -96,7 +96,7 @@ export default class MainLayout extends React.PureComponent<MainLayoutProps, Mai
                     {this.props.children}
                 </Layout>
                 <Footer className="footer">
-                    <div>来自鱼丸 - 2019</div>
+                    <div>{window.APP_CONF?.FOOTER}</div>
                 </Footer>
             </Layout>
         )
