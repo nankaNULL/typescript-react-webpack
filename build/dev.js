@@ -9,7 +9,7 @@ const apiMocker = require('mocker-api');
 
 module.exports = {
     mode: 'development',
-    devtool: 'cheap-module-eval-source-map',
+    devtool: 'cheap-module-source-map',
     context: path.resolve(__dirname, '../src'), // 解析起点
     entry: {
         vendor: ['react'],
@@ -18,8 +18,8 @@ module.exports = {
     output: {
         path: buildPath, // 输出文件存放在本地的目录
         publicPath: '/', // 配置发布到线上资源的 URL 前缀
-        chunkFilename: 'js/[name].[hash].js', // 无入口的chunk在输出时的文件名称
-        filename: 'js/[name].[hash].js'
+        chunkFilename: 'js/[name].[contenthash].js', // 无入口的chunk在输出时的文件名称
+        filename: 'js/[name].[contenthash].js'
     },
     resolve: { // 配置 Webpack 如何寻找模块所对应的文件
         extensions: ['.js', '.jsx', '.ts', '.tsx', '.scss', '.css', '.json'], // 用于配置在尝试过程中用到的后缀列表
@@ -43,13 +43,7 @@ module.exports = {
         {
             test: /\.(less|css)$/,
             use: [
-                {
-                    loader: MiniCssExtractPlugin.loader,
-                    options: {
-                        hmr: true,
-                        reloadAll: true,
-                    }
-                },
+                MiniCssExtractPlugin.loader,
                 'css-loader',
                 {
                     loader: "less-loader",
@@ -64,13 +58,7 @@ module.exports = {
         {
             test: /\.(scss|sass)$/,
             use: [
-                {
-                    loader: MiniCssExtractPlugin.loader,
-                    options: {
-                        hmr: true,
-                        reloadAll: true,
-                    }
-                },
+                MiniCssExtractPlugin.loader,
                 'css-loader',
                 'sass-loader'
             ]
@@ -105,10 +93,7 @@ module.exports = {
     devServer: {
         host: '0.0.0.0',
         port: '8181',
-        contentBase: buildPath,
-        publicPath: '/',
         historyApiFallback: true,
-        hot: true, // 开启模块热替换功能
         // before: function (app) {
         //     apiMocker(app, path.resolve('./mock/index.js'))
         // },

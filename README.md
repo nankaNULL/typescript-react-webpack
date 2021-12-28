@@ -3,7 +3,6 @@
 
 ### 备注
 
-1. "less-loader": "^6.2.0"，不使用最新版本的原因，最新版本的 less-loader 需要 webpack 5
-2. "copy-webpack-plugin": "^6.4.1"，同上，从 v7 开始，需要升级 webpack 5
-3. "sass-loader": "^10.2.0"，同上，从 v11 开始，需要升级 webpack5
+1. "less-loader": "^6.2.0"，依然不使用最新版本的原因，目测是因为 antd 的一些原有的语法不适配
+2. "css-loader": "^5.2.7", 不升级至最新版本的原因，thread-loader 有 bug, 打包会出错
 

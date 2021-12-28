@@ -45,8 +45,8 @@ const config = {
     output: {
         path: buildPath, // 输出文件存放在本地的目录
         publicPath: './', // 配置发布到线上资源的 URL 前缀
-        chunkFilename: 'js/[name].[hash].js', // 无入口的chunk在输出时的文件名称
-        filename: 'js/[name].[hash].js'
+        chunkFilename: 'js/[name].[contenthash].js', // 无入口的chunk在输出时的文件名称
+        filename: 'js/[name].[contenthash].js'
     },
     resolve: { // 配置 Webpack 如何寻找模块所对应的文件
         extensions: ['.ts', '.tsx', '.js', '.jsx', '.scss', '.css', '.json'], // 用于配置在尝试过程中用到的后缀列表
@@ -95,7 +95,7 @@ const config = {
         {
             test: /\.(scss|sass)$/,
             use: [
-                MiniCssExtractPlugin.loader, //上面的简写方式
+                MiniCssExtractPlugin.loader,
                 'css-loader',
                 'sass-loader'
             ]
@@ -114,12 +114,10 @@ const config = {
             name: 'manifest'
         },
         minimize: true,
-        noEmitOnErrors: true,
+        emitOnErrors: true,
         minimizer: [
             new TerserPlugin({
-                cache: true,
                 parallel: true,
-                sourceMap: false,
                 terserOptions: {
                     compress: {
                         drop_console: true,
@@ -149,12 +147,6 @@ const config = {
             filename: 'index.html',
             template: 'index.html',
         }),
-        new webpack.NamedModulesPlugin(),
-        new webpack.optimize.OccurrenceOrderPlugin(true),
-        new MiniCssExtractPlugin({
-            filename: 'css/[name].[hash].css',
-            chunkFilename: 'css/[name].[hash].css'
-        }),
         new CopyWebpackPlugin({
             patterns: [
                 { from: path.resolve(__dirname, '../src/public/config'), to: 'config' },
@@ -169,4 +161,11 @@ const config = {
     ]
 };
 
-module.exports = smp.wrap(config);
+const configWithTimeMeasures = smp.wrap(config);
+configWithTimeMeasures.plugins.push(new MiniCssExtractPlugin({
+    filename: 'css/[name].[contenthash].css',
+    chunkFilename: 'css/[name].[contenthash].css'
+}));
+
+module.exports = configWithTimeMeasures;
+// module.exports = smp.wrap(config);
