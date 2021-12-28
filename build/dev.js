@@ -86,7 +86,6 @@ module.exports = {
             filename: 'index.html',
             template: 'index.html',
         }),
-        new webpack.NamedModulesPlugin(),
         new webpack.HotModuleReplacementPlugin(),
         new MiniCssExtractPlugin({
             filename: 'css/[name].css',
@@ -98,8 +97,8 @@ module.exports = {
         new CopyWebpackPlugin({
             patterns: [
                 { from: path.resolve(__dirname, '../src/public/config'), to: 'config' },
-                { from: path.resolve(__dirname, '../src/public/imgs'), to: 'imgs' },
-                { from: path.resolve(__dirname, '../src/public/fonts'), to: 'fonts' }
+                // { from: path.resolve(__dirname, '../src/public/imgs'), to: 'imgs' },
+                // { from: path.resolve(__dirname, '../src/public/fonts'), to: 'fonts' }
             ]
         }),
     ],
