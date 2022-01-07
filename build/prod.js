@@ -1,166 +1,74 @@
+const { merge } = require('webpack-merge');
 const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const path = require('path');
-const buildPath = path.resolve(__dirname, '../dist');
+const base = require('./base');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require('terser-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const SpeedMeasurePlugin = require('speed-measure-webpack-plugin');
-const smp = new SpeedMeasurePlugin();
+const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const SpeedMeasurePlugin = require('speed-measure-webpack-plugin');
 
-const threadLoader = require('thread-loader');
+const smp = new SpeedMeasurePlugin();
 
-const jsWorkerPool = {
-    // options
-
-    // 产生的 worker 的数量，默认是 (cpu 核心数 - 1)
-    // 当 require('os').cpus() 是 undefined 时，则为 1
-    workers: 2,
-
-    // 闲置时定时删除 worker 进程
-    // 默认为 500ms
-    // 可以设置为无穷大， 这样在监视模式(--watch)下可以保持 worker 持续存在
-    poolTimeout: 2000
-};
-
-const cssWorkerPool = {
-    // 一个 worker 进程中并行执行工作的数量
-    // 默认为 20
-    workerParallelJobs: 2,
-    poolTimeout: 2000
-};
-
-threadLoader.warmup(jsWorkerPool, ['babel-loader']);
-threadLoader.warmup(cssWorkerPool, ['css-loader', 'less-loader']);
-
-const config = {
+const config = merge(base, {
     mode: 'production',
-    context: path.resolve(__dirname, '../src'), // 解析起点
     entry: {
-        vendor: ['react'],
-        app: ['./main']
-    },
-    output: {
-        path: buildPath, // 输出文件存放在本地的目录
-        publicPath: './', // 配置发布到线上资源的 URL 前缀
-        chunkFilename: 'js/[name].[contenthash].js', // 无入口的chunk在输出时的文件名称
-        filename: 'js/[name].[contenthash].js'
-    },
-    resolve: { // 配置 Webpack 如何寻找模块所对应的文件
-        extensions: ['.ts', '.tsx', '.js', '.jsx', '.scss', '.css', '.json'], // 用于配置在尝试过程中用到的后缀列表
-        alias: { // 别名
-            '@': path.resolve(__dirname, '../src'),
-            'public': path.resolve(__dirname, '../public'),
-            'components': path.resolve(__dirname, '../src/components/'),
-            'pages': path.resolve(__dirname, '../src/pages/'),
-            'layout': path.resolve(__dirname, '../src/layout/')
-        }
-    },
-    externals: {
-        'FRONT_CONF': 'FRONT_CONF'
-    },
-    module: {
-        rules: [{ // 配置模块的读取和解析规则，通常用来配置 Loader
-            test: /\.[jt]sx?$/,
-            exclude: /node_modules/, // exclude不包括，include只命中
-            use: [
-                {
-                    loader: 'thread-loader',
-                    options: jsWorkerPool
-                },
-                'babel-loader?cacheDirectory'
-            ],
-        },
-        {
-            test: /\.(less|css)$/,
-            use: [
-                MiniCssExtractPlugin.loader,
-                {
-                    loader: 'thread-loader',
-                    options: cssWorkerPool
-                },
-                'css-loader',
-                {
-                    loader: "less-loader",
-                    options: {
-                        lessOptions: {
-                            javascriptEnabled: true
-                        }
-                    }
-                }
-            ],
-        },
-        {
-            test: /\.(scss|sass)$/,
-            use: [
-                MiniCssExtractPlugin.loader,
-                'css-loader',
-                'sass-loader'
-            ]
-        },
-        {
-            test: /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)(\?[tv]=[\d.]+)*$/,
-            use: ['file-loader?name=[name].[ext]']
-        }
-        ]
+        vendor: 'react',
+        app: './main'
     },
     performance: {
         hints: false,
     },
     optimization: {
+        usedExports: true,
         runtimeChunk: {
             name: 'manifest'
         },
-        minimize: true,
         emitOnErrors: true,
+        minimize: true,
         minimizer: [
             new TerserPlugin({
                 parallel: true,
                 terserOptions: {
+                    mangle: false,
+                    keep_classnames: false,
+                    keep_fnames: false,
+                    module: false,
                     compress: {
                         drop_console: true,
                         drop_debugger: true
                     }
                 }
             }),
-            new OptimizeCSSAssetsPlugin({})
+            new CssMinimizerPlugin({
+                parallel: 4
+            })
         ],
         splitChunks: {
+            chunks: 'async',
+            minSize: 30000,
+            minChunks: 1,
+            maxAsyncRequests: 6,
+            maxInitialRequests: 4,
+            automaticNameDelimiter: '~',
             cacheGroups: {
-                vendor: {
-                    chunks: 'initial',
-                    name: 'vendor',
-                    test: 'vendor'
-                },
-                echarts: {
-                    chunks: 'all',
-                    name: 'echarts',
-                    test: /[\\/]echarts[\\/]/,
+                vendors: {
+                    name: `chunk-vendors`,
+                    test: /[\\/]node_modules[\\/]/,
+                    priority: -10,
+                    chunks: 'initial'
                 }
             }
         }
     },
     plugins: [
-        new HtmlWebpackPlugin({
-            filename: 'index.html',
-            template: 'index.html',
-        }),
-        new CopyWebpackPlugin({
-            patterns: [
-                { from: path.resolve(__dirname, '../src/public/config'), to: 'config' },
-                // { from: path.resolve(__dirname, '../src/public/imgs'), to: 'imgs' },
-                // { from: path.resolve(__dirname, '../src/public/fonts'), to: 'fonts' }
-            ]
-        }),
-        new webpack.DefinePlugin({
-            __PRODUCTION: JSON.stringify(true)
-        }),
         // new BundleAnalyzerPlugin()
+        new ProgressBarPlugin(),
+        new webpack.optimize.ModuleConcatenationPlugin(),
     ]
-};
+});
 
+config.plugins = config.plugins.filter((item) => !(item instanceof MiniCssExtractPlugin));
 const configWithTimeMeasures = smp.wrap(config);
 configWithTimeMeasures.plugins.push(new MiniCssExtractPlugin({
     filename: 'css/[name].[contenthash].css',
